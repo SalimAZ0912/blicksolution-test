@@ -1,4 +1,4 @@
-<div class="cpp-feature-item" {{ block.shopify_attributes }}>
+<div class="cpp-feature-item" style="--cpp-title-size: {{ block.settings.font_size_title }}px; --cpp-text-size: {{ block.settings.font_size_text }}px;" {{ block.shopify_attributes }}>
   <div class="cpp-feature-icon">
     {%- if block.settings.icon != blank -%}
       <img src="{{ block.settings.icon | image_url: width: 160 }}"
@@ -15,7 +15,7 @@
     {%- endif -%}
   </div>
   <div class="cpp-feature-text">
-    <strong style="font-size: {{ block.settings.font_size_title }}px; color: {{ block.settings.color_title | default: '#000000' }};">{{ block.settings.title | default: '100% Qualität' }}</strong>
-    <span style="font-size: {{ block.settings.font_size_text }}px; color: {{ block.settings.color_text | default: '#383838' }};">{{ block.settings.text | default: 'Dank weichem Silikon' }}</span>
+    <strong style="color: {{ block.settings.color_title | default: '#000000' }};">{{ block.settings.title | default: '100% Qualität' }}</strong>
+    <span style="color: {{ block.settings.color_text | default: '#383838' }};">{{ block.settings.text | default: 'Dank weichem Silikon' }}</span>
   </div>
 </div>
