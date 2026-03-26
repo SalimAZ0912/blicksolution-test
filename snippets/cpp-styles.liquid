@@ -10,27 +10,35 @@
 
   .cpp-outer {
     max-width: fit-content;
-    margin: 48px auto;
+    margin: var(--cpp-spacing-top, 48px) auto 48px;
     padding: 0 24px;
   }
 
   .cpp-wrapper {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 475px;
     gap: 50px;
     align-items: center;
   }
 
-  /* ── GALLERY (Thumbs + Hauptbild) ── */
-  .cpp-gallery {
-    display: flex;
-    flex-direction: row;
-    gap: 18px;
-    align-items: flex-start;
-    align-items: center;
+  .cpp-gallery-col {
+    display: grid;
+    grid-template-columns: 100px 480px;
+    column-gap: 18px;
   }
 
-  /* ── THUMBNAILS ── */
+  .cpp-gallery {
+    display: contents;
+  }
+
+  .cpp-thumbs {
+    align-self: center;
+  }
+
+  .cpp-arrows {
+    grid-column: 2;
+  }
+
   .cpp-thumbs {
     display: flex;
     flex-direction: column;
@@ -53,7 +61,7 @@
   }
 
   .cpp-thumb:hover {
-    border-color: #2563eb;
+    border-color: var(--cpp-accent, #1f47ff);
   }
 
   .cpp-thumb img {
@@ -63,7 +71,6 @@
     display: block;
   }
 
-  /* ── MAIN IMAGE ── */
   .cpp-main-wrap {
     width: 480px;
   }
@@ -94,7 +101,6 @@
     scroll-snap-align: start;
   }
 
-  /* ── DOTS ── */
   .cpp-dots {
     display: none;
     justify-content: center;
@@ -103,10 +109,10 @@
   }
 
   .cpp-dot-bullet {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: #ccc;
+    background: #f8f8f8;
     border: none;
     padding: 0;
     cursor: pointer;
@@ -114,13 +120,14 @@
   }
 
   .cpp-dot-bullet.is-active {
-    background: #111;
+    background: #e5e5e5;
+    box-shadow: inset 0 3px 4px 0 #00000029;
   }
 
   .cpp-arrows {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 10px;
   }
 
   .cpp-arrow {
@@ -131,7 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   .cpp-arrow img {
@@ -152,13 +159,12 @@
     cursor: default;
   }
 
-  /* ── INFO CARD ── */
   .cpp-info-card {
     width: 100%;
-    background: #ffffff 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 20px #00000029;
-    border: 1px solid #d5d5d5;
-    border-radius: 5px;
+    background: var(--cpp-card-bg, #ffffff);
+    box-shadow: var(--cpp-card-shadow, 0px 3px 20px #00000029);
+    border: 1px solid var(--cpp-card-border, #d5d5d5);
+    border-radius: var(--cpp-card-radius, 5px);
     padding: 18px 28px;
     display: flex;
     flex-direction: column;
@@ -199,7 +205,7 @@
     text-align: left;
     font: normal normal 600 18px/22px Montserrat;
     letter-spacing: 0px;
-    color: #1f47ff;
+    color: var(--cpp-accent, #1f47ff);
     margin-right: 6px;
   }
 
@@ -231,29 +237,30 @@
   .cpp-dot--green {
     background: #25a525;
   }
+
   .cpp-dot--red {
     background: #dc2626;
   }
 
-  /* ── ATC BUTTON ── */
   .cpp-atc-btn {
     font: normal normal 600 18px/22px Montserrat;
-    color: #ffffff;
+    color: var(--cpp-btn-text, #ffffff);
     width: 424px;
     height: 52px;
-    background: #1f47ff;
+    background: var(--cpp-accent, #1f47ff);
     border-radius: 3px;
     border: none;
   }
 
   .cpp-atc-btn:hover {
-    background: #1d4ed8;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+    filter: brightness(0.88);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   }
 
   .cpp-atc-btn:active {
     transform: scale(0.98);
   }
+
   .cpp-atc-btn:disabled {
     background: #9ca3af;
     cursor: not-allowed;
@@ -264,13 +271,10 @@
     background: #16a34a;
   }
 
-  /* ── FEATURES ── */
   .cpp-features {
-    display: grid;
-    grid-template-columns: auto;
-    grid-auto-flow: column;
-    margin-top: 40px;
-    padding-top: 40px;
+    display: flex;
+    margin-top: 37px;
+    gap: 32px;
     justify-content: space-between;
   }
 
@@ -283,11 +287,13 @@
   .cpp-feature-icon {
     flex-shrink: 0;
     color: #333;
+    width: 57px;
+    height: 57px;
   }
 
+  .cpp-feature-icon img,
   .cpp-feature-icon svg {
-    width: 48px;
-    height: 48px;
+    display: block;
   }
 
   .cpp-feature-text {
@@ -310,150 +316,84 @@
     color: #383838;
   }
 
-  /* ── RESPONSIVE: Mobile-first ── */
-
-  /* Base: Mobile */
-  .cpp-outer {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 16px;
-    margin: 24px auto;
-    box-sizing: border-box;
-  }
-
-  .cpp-atc-btn {
-    width: 100%;
-  }
-
-  .cpp-wrapper {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .cpp-gallery {
-    flex-direction: column-reverse;
-    gap: 12px;
-  }
-
-  .cpp-thumbs {
-    display: none;
-  }
-
-  .cpp-thumb {
-    min-width: 70px;
-    width: 70px;
-    height: 70px;
-    flex-shrink: 0;
-  }
-
-  /* Slider nimmt exakt die volle Viewport-Breite ein */
-  .cpp-main-wrap {
-    width: 100vw;
-    margin-left: -16px;
-  }
-
-  .cpp-main-img {
-    width: 100vw;
-    height: auto;
-  }
-
-  .cpp-main-img img {
-    width: 100vw;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    scroll-snap-align: start;
-    margin: 0;
-  }
-
-  .cpp-info-card {
-    width: 100%;
-  }
-
-  /* Features: stack vertically on mobile */
-  .cpp-features {
-    grid-template-columns: 1fr;
-    grid-auto-flow: row;
-    gap: 20px;
-  }
-
-  /* Dots visible on mobile */
-  .cpp-dots {
-    display: flex;
-  }
-
-  /* Arrows hidden on mobile */
-  .cpp-arrows {
-    display: none;
-  }
-
-  /* Desktop: ab 960px */
-  @media (min-width: 960px) {
+  @media (max-width: 959px) {
     .cpp-outer {
-      max-width: fit-content;
-      width: auto;
-      padding: 0 24px;
-      margin: 48px auto;
+      width: 100%;
+      max-width: 100%;
+      padding: 0 16px;
+      margin: 24px auto;
+      box-sizing: border-box;
     }
 
     .cpp-wrapper {
-      grid-template-columns: 1fr 475px;
-      gap: 50px;
-    }
-
-    .cpp-gallery {
-      flex-direction: row;
-      gap: 18px;
-    }
-
-    .cpp-thumbs {
-      display: flex;
-      flex-direction: column;
-      overflow-x: unset;
-    }
-
-    .cpp-thumb {
-      min-width: unset;
-      width: 100px;
-      height: 100px;
-    }
-
-    .cpp-main-wrap {
-      width: 480px;
-      height: 480px;
-    }
-
-    .cpp-main-img {
-      width: 480px;
-      height: 480px;
-    }
-
-    .cpp-main-img img {
-      width: 480px;
-      height: 480px;
+      grid-template-columns: 1fr;
+      gap: 24px;
     }
 
     .cpp-info-card {
+      padding: 26px 14px;
+    }
+
+    .cpp-gallery-col {
+      display: block;
+    }
+
+    .cpp-gallery {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 12px;
+    }
+
+    .cpp-thumbs {
+      display: none;
+    }
+
+    .cpp-main-wrap {
       width: 100%;
     }
 
-    .cpp-features {
-      gap: 32px;
-      grid-auto-flow: none;
+    .cpp-main-img {
+      width: 100%;
+      height: auto;
+    }
+
+    .cpp-main-img img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      margin: 0;
+    }
+
+    .cpp-dots {
       display: flex;
     }
 
     .cpp-arrows {
-      display: flex;
-    }
-
-    .cpp-dots {
       display: none;
     }
 
-    /* Touch-Targets: min 44px für Arrows */
-    .cpp-arrow {
-      min-width: 44px;
-      min-height: 44px;
+    .cpp-atc-btn {
+      width: 100%;
+    }
+
+    .cpp-features {
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 37px;
+      align-items: center;
+    }
+
+    .cpp-feature-text strong {
+      font-size: 16px;
+    }
+
+    .cpp-feature-text span {
+      font-size: 16px;
+    }
+
+    .cpp-feature-icon {
+      width: 48px;
+      height: 48px;
     }
   }
 </style>

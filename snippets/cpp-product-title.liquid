@@ -1,1 +1,6 @@
-<h1 class="cpp-product-title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+{% style %}
+  .cpp-title-{{ block.id }} {
+    color: {{ block.settings.color | default: '#000000' }};
+  }
+{% endstyle %}
+<h1 class="cpp-product-title cpp-title-{{ block.id }}" style="font-size: {{ block.settings.font_size }}px;" {{ block.shopify_attributes }}>{{ product.title }}</h1>

@@ -1,5 +1,5 @@
 <div class="cpp-main-wrap" {{ block.shopify_attributes }}>
-  <div class="cpp-main-img" id="cpp-slider-{{ section_id }}">
+  <div class="cpp-main-img" id="cpp-slider-{{ section_id }}" style="border-radius: {{ block.settings.border_radius }}px;">
     {%- for image in product.images limit: 8 -%}
       <img src="{{ image | image_url: width: 900 }}"
            alt="{{ image.alt | escape }}"
@@ -11,13 +11,5 @@
     {%- for image in product.images limit: 8 -%}
       <button class="cpp-dot-bullet{% if forloop.first %} is-active{% endif %}" aria-label="Bild {{ forloop.index }}"></button>
     {%- endfor -%}
-  </div>
-  <div class="cpp-arrows">
-    <button class="cpp-arrow cpp-prev" data-section="{{ section_id }}" aria-label="Vorheriges Bild">
-      <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
-    </button>
-    <button class="cpp-arrow cpp-next" data-section="{{ section_id }}" aria-label="Nächstes Bild">
-      <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
-    </button>
   </div>
 </div>
