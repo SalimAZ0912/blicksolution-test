@@ -1,0 +1,78 @@
+<script>
+(function() {
+  var sectionId = '{{ section_id }}';
+  var thumbContainer = document.getElementById('cpp-thumbs-' + sectionId);
+  var mainImg = document.getElementById('cpp-mainimg-' + sectionId);
+  var atcForm = document.getElementById('cpp-atc-form-' + sectionId);
+  var atcBtn  = document.getElementById('cpp-atc-btn-'  + sectionId);
+
+  if (!thumbContainer || !mainImg) return;
+
+  var thumbs  = Array.from(thumbContainer.querySelectorAll('.cpp-thumb'));
+  var current = 0;
+  var prevBtns = Array.from(document.querySelectorAll('.cpp-prev[data-section="' + sectionId + '"]'));
+  var nextBtns = Array.from(document.querySelectorAll('.cpp-next[data-section="' + sectionId + '"]'));
+
+  function updateButtons() {
+    prevBtns.forEach(function(btn) { btn.disabled = current === 0; });
+    nextBtns.forEach(function(btn) { btn.disabled = current === thumbs.length - 1; });
+  }
+
+  function goTo(index) {
+    if (index < 0 || index >= thumbs.length) return;
+    thumbs[current].classList.remove('is-active');
+    current = index;
+    thumbs[current].classList.add('is-active');
+    mainImg.style.opacity = '0';
+    setTimeout(function() {
+      mainImg.src = thumbs[current].dataset.src;
+      mainImg.style.opacity = '1';
+    }, 180);
+    updateButtons();
+  }
+
+  thumbs.forEach(function(thumb, i) {
+    thumb.addEventListener('click', function() { goTo(i); });
+  });
+
+  prevBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() { goTo(current - 1); });
+  });
+
+  nextBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() { goTo(current + 1); });
+  });
+
+  updateButtons();
+
+  // ── AJAX Add to Cart ──
+  if (atcForm) {
+    atcForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var variantId = atcForm.querySelector('[name="id"]').value;
+      atcBtn.disabled = true;
+      atcBtn.textContent = 'Wird hinzugefügt...';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function() {
+        atcBtn.textContent = '✓ Hinzugefügt!';
+        atcBtn.classList.add('added');
+        setTimeout(function() {
+          atcBtn.textContent = 'In den Einkaufswagen';
+          atcBtn.classList.remove('added');
+          atcBtn.disabled = false;
+        }, 2500);
+      })
+      .catch(function() {
+        atcBtn.textContent = 'Fehler – bitte erneut';
+        atcBtn.disabled = false;
+      });
+    });
+  }
+})();
+</script>
