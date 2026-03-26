@@ -1,0 +1,7 @@
+<div class="cpp-price" {{ block.shopify_attributes }}>
+  {%- if current_variant.compare_at_price > current_variant.price -%}
+    <span class="cpp-price-compare">{{ current_variant.compare_at_price | money }}</span>
+  {%- endif -%}
+  <span class="cpp-price-sale">{{ current_variant.price | money }}</span>
+  <span class="cpp-price-tax">{{ block.settings.tax_label | default: 'inkl. MwSt.' }}</span>
+</div>
