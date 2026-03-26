@@ -1,0 +1,12 @@
+<div class="cpp-thumbs" id="cpp-thumbs-{{ section_id }}" {{ block.shopify_attributes }}>
+  {%- for image in product.images limit: 8 -%}
+    <div class="cpp-thumb {% if forloop.first %}is-active{% endif %}"
+         data-index="{{ forloop.index0 }}"
+         data-src="{{ image | image_url: width: 900 }}">
+      <img src="{{ image | image_url: width: 160 }}"
+           alt="{{ image.alt | escape }}"
+           loading="lazy"
+           width="160" height="160">
+    </div>
+  {%- endfor -%}
+</div>
