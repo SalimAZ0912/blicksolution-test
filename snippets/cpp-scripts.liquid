@@ -2,48 +2,63 @@
 (function() {
   var sectionId = '{{ section_id }}';
   var thumbContainer = document.getElementById('cpp-thumbs-' + sectionId);
-  var mainImg = document.getElementById('cpp-mainimg-' + sectionId);
+  var slider = document.getElementById('cpp-slider-' + sectionId);
+  var dotsContainer = document.getElementById('cpp-dots-' + sectionId);
   var atcForm = document.getElementById('cpp-atc-form-' + sectionId);
   var atcBtn  = document.getElementById('cpp-atc-btn-'  + sectionId);
 
-  if (!thumbContainer || !mainImg) return;
+  if (!slider) return;
 
-  var thumbs  = Array.from(thumbContainer.querySelectorAll('.cpp-thumb'));
+  var thumbs  = thumbContainer ? Array.from(thumbContainer.querySelectorAll('.cpp-thumb')) : [];
+  var dots    = dotsContainer  ? Array.from(dotsContainer.querySelectorAll('.cpp-dot-bullet')) : [];
+  var total   = dots.length || thumbs.length;
   var current = 0;
   var prevBtns = Array.from(document.querySelectorAll('.cpp-prev[data-section="' + sectionId + '"]'));
   var nextBtns = Array.from(document.querySelectorAll('.cpp-next[data-section="' + sectionId + '"]'));
 
-  function updateButtons() {
+  function updateActive(index) {
+    current = index;
+    thumbs.forEach(function(t, i) { t.classList.toggle('is-active', i === index); });
+    dots.forEach(function(d, i) { d.classList.toggle('is-active', i === index); });
     prevBtns.forEach(function(btn) { btn.disabled = current === 0; });
-    nextBtns.forEach(function(btn) { btn.disabled = current === thumbs.length - 1; });
+    nextBtns.forEach(function(btn) { btn.disabled = current === total - 1; });
   }
 
   function goTo(index) {
-    if (index < 0 || index >= thumbs.length) return;
-    thumbs[current].classList.remove('is-active');
-    current = index;
-    thumbs[current].classList.add('is-active');
-    mainImg.style.opacity = '0';
-    setTimeout(function() {
-      mainImg.src = thumbs[current].dataset.src;
-      mainImg.style.opacity = '1';
-    }, 180);
-    updateButtons();
+    if (index < 0 || index >= total) return;
+    slider.scrollTo({ left: index * slider.offsetWidth, behavior: 'smooth' });
+    updateActive(index);
   }
 
+  // Sync active state on native swipe
+  var scrollTimer;
+  slider.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      var index = Math.round(slider.scrollLeft / slider.offsetWidth);
+      updateActive(index);
+    }, 80);
+  }, { passive: true });
+
+  // Thumbnail clicks
   thumbs.forEach(function(thumb, i) {
     thumb.addEventListener('click', function() { goTo(i); });
   });
 
+  // Dot clicks
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { goTo(i); });
+  });
+
+  // Arrow clicks
   prevBtns.forEach(function(btn) {
     btn.addEventListener('click', function() { goTo(current - 1); });
   });
-
   nextBtns.forEach(function(btn) {
     btn.addEventListener('click', function() { goTo(current + 1); });
   });
 
-  updateButtons();
+  updateActive(0);
 
   // ── AJAX Add to Cart ──
   if (atcForm) {

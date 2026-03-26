@@ -1,9 +1,16 @@
 <div class="cpp-main-wrap" {{ block.shopify_attributes }}>
-  <div class="cpp-main-img">
-    <img src="{{ product.featured_image | image_url: width: 900 }}"
-         alt="{{ product.featured_image.alt | escape }}"
-         id="cpp-mainimg-{{ section_id }}"
-         width="900" height="900">
+  <div class="cpp-main-img" id="cpp-slider-{{ section_id }}">
+    {%- for image in product.images limit: 8 -%}
+      <img src="{{ image | image_url: width: 900 }}"
+           alt="{{ image.alt | escape }}"
+           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+           width="900" height="900">
+    {%- endfor -%}
+  </div>
+  <div class="cpp-dots" id="cpp-dots-{{ section_id }}">
+    {%- for image in product.images limit: 8 -%}
+      <button class="cpp-dot-bullet{% if forloop.first %} is-active{% endif %}" aria-label="Bild {{ forloop.index }}"></button>
+    {%- endfor -%}
   </div>
   <div class="cpp-arrows">
     <button class="cpp-arrow cpp-prev" data-section="{{ section_id }}" aria-label="Vorheriges Bild">

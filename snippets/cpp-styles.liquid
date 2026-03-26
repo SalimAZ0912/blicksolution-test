@@ -66,24 +66,55 @@
   /* ── MAIN IMAGE ── */
   .cpp-main-wrap {
     width: 480px;
-    height: 480px;
   }
 
   .cpp-main-img {
     border-radius: 5px;
-    overflow: hidden;
     background: #f3f3f3;
-    aspect-ratio: 1 / 1;
     width: 480px;
     height: 480px;
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+  }
+
+  .cpp-main-img::-webkit-scrollbar {
+    display: none;
   }
 
   .cpp-main-img img {
+    flex-shrink: 0;
     width: 480px;
     height: 480px;
     object-fit: cover;
     display: block;
-    transition: opacity 0.2s ease;
+    scroll-snap-align: start;
+  }
+
+  /* ── DOTS ── */
+  .cpp-dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .cpp-dot-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .cpp-dot-bullet.is-active {
+    background: #111;
   }
 
   .cpp-arrows {
@@ -279,34 +310,150 @@
     color: #383838;
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 960px) {
-    .cpp-wrapper {
-      grid-template-columns: 75px 1fr;
-      grid-template-rows: auto auto;
-    }
-    .cpp-info-card {
-      grid-column: 1 / -1;
-    }
-    .cpp-features {
-      grid-template-columns: 1fr 1fr;
-    }
+  /* ── RESPONSIVE: Mobile-first ── */
+
+  /* Base: Mobile */
+  .cpp-outer {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+    margin: 24px auto;
+    box-sizing: border-box;
   }
 
-  @media (max-width: 600px) {
+  .cpp-atc-btn {
+    width: 100%;
+  }
+
+  .cpp-wrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .cpp-gallery {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .cpp-thumbs {
+    display: none;
+  }
+
+  .cpp-thumb {
+    min-width: 70px;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+  }
+
+  /* Slider nimmt exakt die volle Viewport-Breite ein */
+  .cpp-main-wrap {
+    width: 100vw;
+    margin-left: -16px;
+  }
+
+  .cpp-main-img {
+    width: 100vw;
+    height: auto;
+  }
+
+  .cpp-main-img img {
+    width: 100vw;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    scroll-snap-align: start;
+    margin: 0;
+  }
+
+  .cpp-info-card {
+    width: 100%;
+  }
+
+  /* Features: stack vertically on mobile */
+  .cpp-features {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    gap: 20px;
+  }
+
+  /* Dots visible on mobile */
+  .cpp-dots {
+    display: flex;
+  }
+
+  /* Arrows hidden on mobile */
+  .cpp-arrows {
+    display: none;
+  }
+
+  /* Desktop: ab 960px */
+  @media (min-width: 960px) {
+    .cpp-outer {
+      max-width: fit-content;
+      width: auto;
+      padding: 0 24px;
+      margin: 48px auto;
+    }
+
     .cpp-wrapper {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 475px;
+      gap: 50px;
     }
-    .cpp-thumbs {
+
+    .cpp-gallery {
       flex-direction: row;
-      overflow-x: auto;
-      padding-bottom: 4px;
+      gap: 18px;
     }
+
+    .cpp-thumbs {
+      display: flex;
+      flex-direction: column;
+      overflow-x: unset;
+    }
+
     .cpp-thumb {
-      min-width: 70px;
+      min-width: unset;
+      width: 100px;
+      height: 100px;
     }
+
+    .cpp-main-wrap {
+      width: 480px;
+      height: 480px;
+    }
+
+    .cpp-main-img {
+      width: 480px;
+      height: 480px;
+    }
+
+    .cpp-main-img img {
+      width: 480px;
+      height: 480px;
+    }
+
+    .cpp-info-card {
+      width: 100%;
+    }
+
     .cpp-features {
-      grid-template-columns: 1fr;
+      gap: 32px;
+      grid-auto-flow: none;
+      display: flex;
+    }
+
+    .cpp-arrows {
+      display: flex;
+    }
+
+    .cpp-dots {
+      display: none;
+    }
+
+    /* Touch-Targets: min 44px für Arrows */
+    .cpp-arrow {
+      min-width: 44px;
+      min-height: 44px;
     }
   }
 </style>
