@@ -21,63 +21,60 @@
 {% endstyle %}
 
 <div class="cpp-outer" id="cpp-{{ section.id }}">
-<div class="cpp-wrapper">
+  <div class="cpp-wrapper">
+    <div class="cpp-gallery-col">
+      <div class="cpp-gallery">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'thumbnails' -%}
+              {%- render 'cpp-thumbnails', product: product, section_id: section_id, block: block -%}
+            {%- when 'main_image' -%}
+              {%- render 'cpp-main-image', product: product, section_id: section_id, block: block -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+      <div class="cpp-arrows">
+        <button class="cpp-arrow cpp-prev" data-section="{{ section_id }}" aria-label="Vorheriges Bild">
+          <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
+        </button>
+        <button class="cpp-arrow cpp-next" data-section="{{ section_id }}" aria-label="Nächstes Bild">
+          <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
+        </button>
+      </div>
+    </div>
 
-  <div class="cpp-gallery-col">
-    <div class="cpp-gallery">
+    <div class="cpp-info-card">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
-          {%- when 'thumbnails' -%}
-            {%- render 'cpp-thumbnails', product: product, section_id: section_id, block: block -%}
-          {%- when 'main_image' -%}
-            {%- render 'cpp-main-image', product: product, section_id: section_id, block: block -%}
+          {%- when 'product_title' -%}
+            {%- render 'cpp-product-title', product: product, block: block -%}
+          {%- when 'product_subtitle' -%}
+            {%- render 'cpp-product-subtitle', product: product, block: block -%}
+          {%- when 'price' -%}
+            {%- render 'cpp-price', current_variant: current_variant, block: block -%}
+          {%- when 'delivery' -%}
+            {%- render 'cpp-delivery', current_variant: current_variant, block: block -%}
+          {%- when 'buy_button' -%}
+            {%- render 'cpp-buy-button', current_variant: current_variant, section_id: section_id, block: block -%}
         {%- endcase -%}
       {%- endfor -%}
     </div>
-    <div class="cpp-arrows">
-      <button class="cpp-arrow cpp-prev" data-section="{{ section_id }}" aria-label="Vorheriges Bild">
-        <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
-      </button>
-      <button class="cpp-arrow cpp-next" data-section="{{ section_id }}" aria-label="Nächstes Bild">
-        <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
-      </button>
-    </div>
   </div>
 
-  <div class="cpp-info-card">
+  <div class="cpp-features">
     {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'product_title' -%}
-          {%- render 'cpp-product-title', product: product, block: block -%}
-        {%- when 'product_subtitle' -%}
-          {%- render 'cpp-product-subtitle', product: product, block: block -%}
-        {%- when 'price' -%}
-          {%- render 'cpp-price', current_variant: current_variant, block: block -%}
-        {%- when 'delivery' -%}
-          {%- render 'cpp-delivery', current_variant: current_variant, block: block -%}
-        {%- when 'buy_button' -%}
-          {%- render 'cpp-buy-button', current_variant: current_variant, section_id: section_id, block: block -%}
-      {%- endcase -%}
+      {%- if block.type == 'feature' -%}
+        {%- render 'cpp-feature-item', block: block -%}
+      {%- endif -%}
     {%- endfor -%}
   </div>
-
-</div>
-
-<div class="cpp-features">
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'feature' -%}
-      {%- render 'cpp-feature-item', block: block -%}
-    {%- endif -%}
-  {%- endfor -%}
-</div>
-
 </div>
 
 {%- render 'cpp-scripts', section_id: section_id -%}
 
 {% schema %}
 {
-  "name": "Custom Product Page",
+  "name": "BlickSolution - Test",
   "tag": "section",
   "class": "cpp-section",
   "settings": [

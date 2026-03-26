@@ -30,7 +30,6 @@
     updateActive(index);
   }
 
-  // Sync active state on native swipe
   var scrollTimer;
   slider.addEventListener('scroll', function() {
     clearTimeout(scrollTimer);
@@ -40,17 +39,14 @@
     }, 80);
   }, { passive: true });
 
-  // Thumbnail clicks
   thumbs.forEach(function(thumb, i) {
     thumb.addEventListener('click', function() { goTo(i); });
   });
 
-  // Dot clicks
   dots.forEach(function(dot, i) {
     dot.addEventListener('click', function() { goTo(i); });
   });
 
-  // Arrow clicks
   prevBtns.forEach(function(btn) {
     btn.addEventListener('click', function() { goTo(current - 1); });
   });
@@ -60,7 +56,6 @@
 
   updateActive(0);
 
-  // ── AJAX Add to Cart ──
   if (atcForm) {
     atcForm.addEventListener('submit', function(e) {
       e.preventDefault();
