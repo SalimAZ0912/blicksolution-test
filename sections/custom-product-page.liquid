@@ -1,0 +1,174 @@
+{%- assign product = section.settings.product | default: product -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign section_id = section.id -%}
+
+{%- render 'cpp-styles' -%}
+
+<div class="cpp-outer" id="cpp-{{ section.id }}">
+<div class="cpp-wrapper">
+
+  {%- comment -%} Galerie-Blocks (Thumbnails + Hauptbild) {%- endcomment -%}
+  <div class="cpp-gallery">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'thumbnails' -%}
+          {%- render 'cpp-thumbnails', product: product, section_id: section_id, block: block -%}
+        {%- when 'main_image' -%}
+          {%- render 'cpp-main-image', product: product, section_id: section_id, block: block -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} Info-Card sammelt alle Produkt-Info-Blocks {%- endcomment -%}
+  <div class="cpp-info-card">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'product_title' -%}
+          {%- render 'cpp-product-title', product: product, block: block -%}
+        {%- when 'product_subtitle' -%}
+          {%- render 'cpp-product-subtitle', product: product, block: block -%}
+        {%- when 'price' -%}
+          {%- render 'cpp-price', current_variant: current_variant, block: block -%}
+        {%- when 'delivery' -%}
+          {%- render 'cpp-delivery', current_variant: current_variant, block: block -%}
+        {%- when 'buy_button' -%}
+          {%- render 'cpp-buy-button', current_variant: current_variant, section_id: section_id, block: block -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+</div>
+
+{%- comment -%} Feature-Blocks außerhalb des Wrappers {%- endcomment -%}
+<div class="cpp-features">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'feature' -%}
+      {%- render 'cpp-feature-item', block: block -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+</div>
+
+{%- render 'cpp-scripts', section_id: section_id -%}
+
+{% schema %}
+{
+  "name": "Custom Product Page",
+  "tag": "section",
+  "class": "cpp-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produkt"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "thumbnails",
+      "name": "Thumbnails",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "main_image",
+      "name": "Hauptbild",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "product_title",
+      "name": "Produkttitel",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "product_subtitle",
+      "name": "Untertitel",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "price",
+      "name": "Preis",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tax_label",
+          "label": "Steuerhinweis",
+          "default": "inkl. MwSt."
+        }
+      ]
+    },
+    {
+      "type": "delivery",
+      "name": "Lieferinfo",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "in_stock_text",
+          "label": "Lagernd-Text",
+          "default": "Auf Lager, in 2-3 Tagen bei dir"
+        },
+        {
+          "type": "text",
+          "id": "out_of_stock_text",
+          "label": "Nicht verfügbar-Text",
+          "default": "Nicht verfügbar"
+        }
+      ]
+    },
+    {
+      "type": "buy_button",
+      "name": "Kaufen-Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button-Text",
+          "default": "In den Einkaufswagen"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "100% Qualität"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Dank weichem Silikon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Page",
+      "blocks": [
+        { "type": "thumbnails" },
+        { "type": "main_image" },
+        { "type": "product_title" },
+        { "type": "product_subtitle" },
+        { "type": "price" },
+        { "type": "delivery" },
+        { "type": "buy_button" },
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}
