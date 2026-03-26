@@ -1,0 +1,9 @@
+<div class="cpp-availability" {{ block.shopify_attributes }}>
+  {%- if current_variant.available -%}
+    <span class="cpp-dot cpp-dot--green"></span>
+    <span>{{ block.settings.in_stock_text | default: 'Auf Lager, in 2-3 Tagen bei dir' }}</span>
+  {%- else -%}
+    <span class="cpp-dot cpp-dot--red"></span>
+    <span>{{ block.settings.out_of_stock_text | default: 'Nicht verfügbar' }}</span>
+  {%- endif -%}
+</div>
