@@ -70,6 +70,10 @@
       })
       .then(function(res) { return res.json(); })
       .then(function() {
+        return fetch('/cart.js').then(function(r) { return r.json(); });
+      })
+      .then(function(cart) {
+        document.dispatchEvent(new CustomEvent('cart:update', { bubbles: true, detail: { resource: cart, data: {} } }));
         atcBtn.textContent = '✓ Hinzugefügt!';
         atcBtn.classList.add('added');
         setTimeout(function() {
