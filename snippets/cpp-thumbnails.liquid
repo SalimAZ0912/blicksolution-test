@@ -2,7 +2,8 @@
   {%- for image in product.images limit: 8 -%}
     <div class="cpp-thumb {% if forloop.first %}is-active{% endif %}"
          data-index="{{ forloop.index0 }}"
-         data-src="{{ image | image_url: width: 900 }}">
+         data-src="{{ image | image_url: width: 900 }}"
+         style="width: {{ block.settings.thumb_size }}px; height: {{ block.settings.thumb_size }}px; border-radius: {{ block.settings.thumb_radius }}px;">
       <img src="{{ image | image_url: width: 160 }}"
            alt="{{ image.alt | escape }}"
            loading="lazy"

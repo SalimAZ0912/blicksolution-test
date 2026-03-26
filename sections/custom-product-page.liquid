@@ -4,22 +4,46 @@
 
 {%- render 'cpp-styles' -%}
 
+{% style %}
+  #cpp-{{ section.id }} {
+    --cpp-accent: {{ section.settings.color_accent | default: '#1f47ff' }};
+    --cpp-btn-text: {{ section.settings.color_button_text | default: '#ffffff' }};
+    --cpp-card-bg: {{ section.settings.color_card_bg | default: '#ffffff' }};
+    --cpp-card-border: {{ section.settings.color_card_border | default: '#d5d5d5' }};
+    --cpp-card-radius: {{ section.settings.card_border_radius | default: 5 }}px;
+    --cpp-spacing-top: {{ section.settings.spacing_top | default: 48 }}px;
+    {%- if section.settings.card_shadow != false %}
+    --cpp-card-shadow: 0px 3px 20px #00000029;
+    {%- else %}
+    --cpp-card-shadow: none;
+    {%- endif %}
+  }
+{% endstyle %}
+
 <div class="cpp-outer" id="cpp-{{ section.id }}">
 <div class="cpp-wrapper">
 
-  {%- comment -%} Galerie-Blocks (Thumbnails + Hauptbild) {%- endcomment -%}
-  <div class="cpp-gallery">
-    {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'thumbnails' -%}
-          {%- render 'cpp-thumbnails', product: product, section_id: section_id, block: block -%}
-        {%- when 'main_image' -%}
-          {%- render 'cpp-main-image', product: product, section_id: section_id, block: block -%}
-      {%- endcase -%}
-    {%- endfor -%}
+  <div class="cpp-gallery-col">
+    <div class="cpp-gallery">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'thumbnails' -%}
+            {%- render 'cpp-thumbnails', product: product, section_id: section_id, block: block -%}
+          {%- when 'main_image' -%}
+            {%- render 'cpp-main-image', product: product, section_id: section_id, block: block -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    <div class="cpp-arrows">
+      <button class="cpp-arrow cpp-prev" data-section="{{ section_id }}" aria-label="Vorheriges Bild">
+        <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
+      </button>
+      <button class="cpp-arrow cpp-next" data-section="{{ section_id }}" aria-label="Nächstes Bild">
+        <img src="{{ 'arrow-point-to-right.svg' | asset_url }}" alt="" width="12" height="12">
+      </button>
+    </div>
   </div>
 
-  {%- comment -%} Info-Card sammelt alle Produkt-Info-Blocks {%- endcomment -%}
   <div class="cpp-info-card">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
@@ -39,7 +63,6 @@
 
 </div>
 
-{%- comment -%} Feature-Blocks außerhalb des Wrappers {%- endcomment -%}
 <div class="cpp-features">
   {%- for block in section.blocks -%}
     {%- if block.type == 'feature' -%}
@@ -62,6 +85,68 @@
       "type": "product",
       "id": "product",
       "label": "Produkt"
+    },
+    {
+      "type": "header",
+      "content": "Farben"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Akzentfarbe",
+      "default": "#1f47ff"
+    },
+    {
+      "type": "color",
+      "id": "color_button_text",
+      "label": "Button-Textfarbe",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Info-Card"
+    },
+    {
+      "type": "color",
+      "id": "color_card_bg",
+      "label": "Hintergrundfarbe",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_card_border",
+      "label": "Rahmenfarbe",
+      "default": "#d5d5d5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Eckenradius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Schatten anzeigen",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Abstände"
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Abstand oben (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
     }
   ],
   "blocks": [
@@ -69,31 +154,113 @@
       "type": "thumbnails",
       "name": "Thumbnails",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "range",
+          "id": "thumb_size",
+          "label": "Größe",
+          "min": 60,
+          "max": 120,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "thumb_radius",
+          "label": "Eckenradius",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 6
+        }
+      ]
     },
     {
       "type": "main_image",
       "name": "Hauptbild",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "range",
+          "id": "border_radius",
+          "label": "Eckenradius",
+          "min": 0,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 5
+        }
+      ]
     },
     {
       "type": "product_title",
       "name": "Produkttitel",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Schriftgröße",
+          "min": 16,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 25
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Textfarbe",
+          "default": "#000000"
+        }
+      ]
     },
     {
       "type": "product_subtitle",
       "name": "Untertitel",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Schriftgröße",
+          "min": 12,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Textfarbe",
+          "default": "#000000"
+        }
+      ]
     },
     {
       "type": "price",
       "name": "Preis",
       "limit": 1,
       "settings": [
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Schriftgröße",
+          "min": 12,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "color",
+          "id": "color_compare",
+          "label": "Streichpreis-Farbe",
+          "default": "#000000"
+        },
         {
           "type": "text",
           "id": "tax_label",
@@ -114,10 +281,32 @@
           "default": "Auf Lager, in 2-3 Tagen bei dir"
         },
         {
+          "type": "color",
+          "id": "color_in_stock",
+          "label": "Lagernd-Farbe",
+          "default": "#25a525"
+        },
+        {
           "type": "text",
           "id": "out_of_stock_text",
           "label": "Nicht verfügbar-Text",
           "default": "Nicht verfügbar"
+        },
+        {
+          "type": "color",
+          "id": "color_out_of_stock",
+          "label": "Nicht verfügbar-Farbe",
+          "default": "#dc2626"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Schriftgröße",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 15
         }
       ]
     },
@@ -131,6 +320,36 @@
           "id": "button_text",
           "label": "Button-Text",
           "default": "In den Einkaufswagen"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Schriftgröße",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "label": "Eckenradius",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "button_height",
+          "label": "Button-Höhe",
+          "min": 40,
+          "max": 70,
+          "step": 2,
+          "unit": "px",
+          "default": 52
         }
       ]
     },
@@ -138,6 +357,11 @@
       "type": "feature",
       "name": "Feature",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
         {
           "type": "text",
           "id": "title",
@@ -149,6 +373,48 @@
           "id": "text",
           "label": "Text",
           "default": "Dank weichem Silikon"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon-Größe",
+          "min": 24,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 48
+        },
+        {
+          "type": "range",
+          "id": "font_size_title",
+          "label": "Titel-Schriftgröße",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "font_size_text",
+          "label": "Text-Schriftgröße",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "color",
+          "id": "color_title",
+          "label": "Titel-Farbe",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "color_text",
+          "label": "Text-Farbe",
+          "default": "#383838"
         }
       ]
     }

@@ -1,9 +1,9 @@
-<div class="cpp-availability" {{ block.shopify_attributes }}>
+<div class="cpp-availability" style="font-size: {{ block.settings.font_size | default: 15 }}px;" {{ block.shopify_attributes }}>
   {%- if current_variant.available -%}
-    <span class="cpp-dot cpp-dot--green"></span>
-    <span>{{ block.settings.in_stock_text | default: 'Auf Lager, in 2-3 Tagen bei dir' }}</span>
+    <span class="cpp-dot" style="background: {{ block.settings.color_in_stock | default: '#25a525' }};"></span>
+    <span style="color: {{ block.settings.color_in_stock | default: '#25a525' }};">{{ block.settings.in_stock_text | default: 'Auf Lager, in 2-3 Tagen bei dir' }}</span>
   {%- else -%}
-    <span class="cpp-dot cpp-dot--red"></span>
-    <span>{{ block.settings.out_of_stock_text | default: 'Nicht verfügbar' }}</span>
+    <span class="cpp-dot" style="background: {{ block.settings.color_out_of_stock | default: '#dc2626' }};"></span>
+    <span style="color: {{ block.settings.color_out_of_stock | default: '#dc2626' }};">{{ block.settings.out_of_stock_text | default: 'Nicht verfügbar' }}</span>
   {%- endif -%}
 </div>
