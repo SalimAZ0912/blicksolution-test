@@ -1,0 +1,33 @@
+<div class="cpp-info-card" {{ block.shopify_attributes }}>
+  <h1 class="cpp-product-title">{{ product.title }}</h1>
+  <p class="cpp-product-type">{{ product.type }}</p>
+
+  <div class="cpp-price">
+    {%- if current_variant.compare_at_price > current_variant.price -%}
+      <span class="cpp-price-compare">{{ current_variant.compare_at_price | money }}</span>
+    {%- endif -%}
+    <span class="cpp-price-sale">{{ current_variant.price | money }}</span>
+    <span class="cpp-price-tax">inkl. MwSt.</span>
+  </div>
+
+  <div class="cpp-availability">
+    {%- if current_variant.available -%}
+      <span class="cpp-dot cpp-dot--green"></span>
+      <span>Auf Lager, in 2-3 Tagen bei dir</span>
+    {%- else -%}
+      <span class="cpp-dot cpp-dot--red"></span>
+      <span>Nicht verfügbar</span>
+    {%- endif -%}
+  </div>
+
+  <form id="cpp-atc-form-{{ section_id }}">
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit"
+            class="cpp-atc-btn"
+            id="cpp-atc-btn-{{ section_id }}"
+            {% unless current_variant.available %}disabled{% endunless %}>
+      In den Einkaufswagen
+    </button>
+  </form>
+</div>
