@@ -1,0 +1,10 @@
+<form id="cpp-atc-form-{{ section_id }}" {{ block.shopify_attributes }}>
+  <input type="hidden" name="id" value="{{ current_variant.id }}">
+  <input type="hidden" name="quantity" value="1">
+  <button type="submit"
+          class="cpp-atc-btn"
+          id="cpp-atc-btn-{{ section_id }}"
+          {% unless current_variant.available %}disabled{% endunless %}>
+    {{ block.settings.button_text | default: 'In den Einkaufswagen' }}
+  </button>
+</form>
