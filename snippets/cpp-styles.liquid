@@ -6,6 +6,7 @@
   .cpp-wrapper,
   .cpp-features {
     font-family: 'Montserrat', sans-serif;
+    font-style: normal;
   }
 
   .cpp-outer {
@@ -33,13 +34,6 @@
 
   .cpp-thumbs {
     align-self: center;
-  }
-
-  .cpp-arrows {
-    grid-column: 2;
-  }
-
-  .cpp-thumbs {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -125,6 +119,7 @@
   }
 
   .cpp-arrows {
+    grid-column: 2;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -172,15 +167,17 @@
 
   .cpp-product-title {
     margin-bottom: 12px;
-    font: normal normal 600 25px/30px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 30px;
     color: #000000;
   }
 
   .cpp-product-type {
     text-align: left;
-    font: normal normal 500 18px/22px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
     color: #000000;
     margin-top: 0;
   }
@@ -195,31 +192,35 @@
   .cpp-price-compare {
     text-align: left;
     text-decoration: line-through;
-    font: normal normal 600 18px/22px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
     color: #000000;
     margin-right: 20px;
   }
 
   .cpp-price-sale {
     text-align: left;
-    font: normal normal 600 18px/22px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
     color: var(--cpp-accent, #1f47ff);
     margin-right: 6px;
   }
 
   .cpp-price-tax {
     text-align: left;
-    font: normal normal 500 10px/13px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 13px;
     color: #000000;
   }
 
   .cpp-availability {
     text-align: left;
-    font: normal normal 500 15px/19px Montserrat;
-    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 19px;
     color: #25a525;
     margin-bottom: 37px;
     display: flex;
@@ -243,7 +244,9 @@
   }
 
   .cpp-atc-btn {
-    font: normal normal 600 18px/22px Montserrat;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
     color: var(--cpp-btn-text, #ffffff);
     width: 424px;
     height: 52px;
@@ -303,16 +306,18 @@
 
   .cpp-feature-text strong {
     text-align: left;
-    font: normal normal 500 var(--cpp-title-size, 18px)/1.2 Montserrat;
-    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: var(--cpp-title-size, 18px);
+    line-height: 1.2;
     margin-bottom: 5px;
     color: #000000;
   }
 
   .cpp-feature-text span {
     text-align: left;
-    font: normal normal normal var(--cpp-text-size, 18px)/1.2 Montserrat;
-    letter-spacing: 0px;
+    font-weight: normal;
+    font-size: var(--cpp-text-size, 18px);
+    line-height: 1.2;
     color: #383838;
   }
 
@@ -374,6 +379,10 @@
 
     .cpp-atc-btn {
       width: 100%;
+    }
+
+    .cpp-atc-btn {
+      font-size: 16px !important;
     }
 
     .cpp-features {
